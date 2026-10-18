@@ -122,10 +122,9 @@ carrental.Main shows three things:
 
 I wrote the pricing part two times. First I made one class, PriceCalculator, with a big switch for all the variants, and I wrote tests for it. This is the "before" version. Then I moved every case into its own strategy class and removed the switch. This is the "after" version. The same test file PriceCalculatorTest passed on both commits, so the behavior did not change.
 
--Before (everything in one switch): <paste GitHub link to the BEFORE commit>
+-Before (everything in one switch): https://github.com/muratovaajdana201-ctrl/assignment-5-sdp-aidana/commit/3e3e8b5
 
--After (Strategy pattern): <paste GitHub link to the AFTER commit>
-
+-After (Strategy pattern): https://github.com/muratovaajdana201-ctrl/assignment-5-sdp-aidana/commit/488a23b
 After the refactoring I deleted PriceCalculator and its test, because every strategy now has its own tests. Both commits stay in the git history.
 
 ## Conclusion: what I understood in this assignment
