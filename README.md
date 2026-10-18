@@ -18,7 +18,7 @@ The first family is pricing. The interface is PricingStrategy and the context is
 
 -WeekendPricing goes through every day of the rental and takes 30 percent more for Saturday and Sunday.
 
--LongTermPricing splits the days into tiers. Days 1 to 7 cost the full price, days 8 to 30 cost 85 percent, and the days after 30 cost 70 percent. 
+-LongTermPricing splits the days into tiers. Days 1 to 7 cost the full price, days 8 to 30 cost 85 percent, and the days after 30 cost 70 percent.
 
 -DemandPricing asks how busy the fleet is and changes the price from 0.7 to 1.3 times.
 
@@ -106,7 +106,7 @@ carrental.Main shows three things:
 
 -YoungDriverInsurance: Raises the daily insurance cost for young drivers with short driving experience.
 
--InsuranceContext: Holds the current insurance strategy, then delegates the cost calculation to it. 
+-InsuranceContext: Holds the current insurance strategy, then delegates the cost calculation to it.
 
 -Main: Runs the console demonstration of all strategies, the selector, runtime switching.
 
@@ -120,18 +120,19 @@ carrental.Main shows three things:
 
 ## Refactoring history (before and after)
 
-I wrote the pricing part two times. First I made one class, PriceCalculator, with a big switch for all the variants, and I wrote tests for it. This is the "before" version. Then I moved every case into its own strategy class and removed the switch. This is the "after" version. The same test file PriceCalculatorTest passed on both commits, so the behavior did not change.
+I wrote the pricing part two times. First I made one class, PriceCalculator, with a big switch for all the variants, and I wrote tests for it. This is the "before" version. Then I moved every `case` into its own strategy class and removed the `switch`. This is the "after" version. The same test file `PriceCalculatorTest` passed on both commits, so the behavior did not change.
 
 -Before (everything in one switch): https://github.com/muratovaajdana201-ctrl/assignment-5-sdp-aidana/commit/3e3e8b5
 
 -After (Strategy pattern): https://github.com/muratovaajdana201-ctrl/assignment-5-sdp-aidana/commit/488a23b
+
 After the refactoring I deleted PriceCalculator and its test, because every strategy now has its own tests. Both commits stay in the git history.
 
 ## Conclusion: what I understood in this assignment
 
 Before this assignment I thought a design pattern is just a rule that you must remember. Now I understand that it is a solution for a real problem. My problem was a class with a big switch. Every new way of calculating the price meant opening this class and changing it, and every change could break the old code. With the Strategy pattern I put every way into its own small class. Now to add a new way I only write a new class, and the old classes stay untouched.
 
-I understood the roles of the parts. The strategy interface is a contract, it says what every algorithm must be able to do. A concrete strategy is one algorithm. The context keeps one strategy and passes the work to it, and it does not know which strategy it has. The client or the selector chooses the strategy. When I kept these roles separate, the code became clear. At the beginning I wanted to put the choice into the context, but then I understood that this brings the `if` back, only in another place.
+I understood the roles of the parts. The strategy interface is a contract, it says what every algorithm must be able to do. A concrete strategy is one algorithm. The context keeps one strategy and passes the work to it, and it does not know which strategy it has. The client or the selector chooses the strategy. When I kept these roles separate, the code became clear. At the beginning I wanted to put the choice into the context, but then I understood that this brings the if back, only in another place.
 
 The refactoring part helped me a lot. When I wrote the switch version first, I could feel the problem myself, and after the refactoring the same tests were still green. This showed me that a refactoring changes the structure and not the behavior, and that tests are what proves it.
 
