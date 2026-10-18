@@ -4,8 +4,8 @@ import carrental.model.Rental;
 
 public class LongTermPricing implements PricingStrategy {
 
-    private static final int FIRST_TIER_END = 7;             // дни 1-7: полная цена
-    private static final int SECOND_TIER_END = 30;           // дни 8-30: скидка
+    private static final int FIRST_TIER_END = 7;
+    private static final int SECOND_TIER_END = 30;
     private static final double SECOND_TIER_MULTIPLIER = 0.85;
     private static final double THIRD_TIER_MULTIPLIER = 0.70;
 

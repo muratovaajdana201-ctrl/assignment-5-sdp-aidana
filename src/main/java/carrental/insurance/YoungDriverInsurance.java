@@ -10,10 +10,10 @@ public class YoungDriverInsurance implements InsuranceStrategy {
     public double calculateInsurance(Rental rental) {
         double perDay = BASE_PER_DAY;
         if (rental.driverAge() < 25) {
-            perDay *= 1.5;        // молодой водитель
+            perDay *= 1.5;
         }
         if (rental.drivingYears() < 2) {
-            perDay *= 1.3;        // маленький стаж
+            perDay *= 1.3;
         }
         return perDay * rental.days();
     }

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class WeekendPricing implements PricingStrategy {
 
-    private static final double WEEKEND_MULTIPLIER = 1.3;   // выходной дороже на 30%
+    private static final double WEEKEND_MULTIPLIER = 1.3;
 
     @Override
     public double calculatePrice(Rental rental) {
