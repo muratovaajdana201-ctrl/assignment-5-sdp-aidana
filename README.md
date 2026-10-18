@@ -14,6 +14,7 @@ I made two families of strategies.
 
 The first family is pricing. The interface is PricingStrategy and the context is PricingContext. It has four strategies:
 
+
 -StandardPricing multiplies the daily rate by the number of days.
 
 -WeekendPricing goes through every day of the rental and takes 30 percent more for Saturday and Sunday.
@@ -35,6 +36,7 @@ I tried to make the logic of the strategies really different, not only the numbe
 ## The Selector
 
 PricingSelector is the only class that decides which pricing strategy to use. It checks the rules from top to bottom and the first rule that fits wins:
+
 
 1.If the fleet is more than 80 percent occupied, it takes DemandPricing.
 
@@ -76,40 +78,27 @@ carrental.Main shows three things:
 
 ## Classes and responsibilities
 
--Rental: Holds the validated data of one car rental request.
+| Class | Responsibility |
+|---|---|
+| Rental | Holds the validated data of one car rental request. |
+| FleetDemandProvider | Defines how the program reads the current fleet occupancy rate. |
+| SimulatedFleetDemandProvider | Produces a random occupancy rate that imitates a real fleet system. |
+| FakeFleetDemandProvider (test) | Returns a fixed occupancy rate chosen by the test. |
+| PricingStrategy | Defines the contract for calculating the rental price. |
+| StandardPricing | Multiplies the daily rate by the number of rental days. |
+| WeekendPricing | Adds a 30 percent surcharge to every weekend day of the rental. |
+| LongTermPricing | Applies cheaper daily rates in tiers as the rental grows longer. |
+| DemandPricing | Scales the price with the fleet occupancy rate read from the provider. |
+| PricingContext | Holds the current pricing strategy, then delegates the price calculation to it. |
+| PricingSelector | Chooses a pricing strategy using demand level, rental length, weekend days. |
+| InsuranceStrategy | Defines the contract for calculating the insurance cost. |
+| BasicInsurance | Charges a fixed amount per rental day. |
+| FullCoverInsurance | Charges a small share of the car value per rental day. |
+| YoungDriverInsurance | Raises the daily insurance cost for young drivers with short driving experience. |
+| InsuranceContext | Holds the current insurance strategy, then delegates the cost calculation to it. |
+| Main | Runs the console demonstration of all strategies, the selector, runtime switching. |
 
--FleetDemandProvider: Defines how the program reads the current fleet occupancy rate.
-
--SimulatedFleetDemandProvider: Produces a random occupancy rate that imitates a real fleet system.
-
--FakeFleetDemandProvider (test): Returns a fixed occupancy rate chosen by the test.
-
--PricingStrategy: Defines the contract for calculating the rental price.
-
--StandardPricing: Multiplies the daily rate by the number of rental days.
-
--WeekendPricing: Adds a 30 percent surcharge to every weekend day of the rental.
-
--LongTermPricing: Applies cheaper daily rates in tiers as the rental grows longer.
-
--DemandPricing: Scales the price with the fleet occupancy rate read from the provider.
-
--PricingContext: Holds the current pricing strategy, then delegates the price calculation to it.
-
--PricingSelector: Chooses a pricing strategy using demand level, rental length, weekend days.
-
--InsuranceStrategy: Defines the contract for calculating the insurance cost.
-
--BasicInsurance: Charges a fixed amount per rental day.
-
--FullCoverInsurance: Charges a small share of the car value per rental day.
-
--YoungDriverInsurance: Raises the daily insurance cost for young drivers with short driving experience.
-
--InsuranceContext: Holds the current insurance strategy, then delegates the cost calculation to it.
-
--Main: Runs the console demonstration of all strategies, the selector, runtime switching.
-
+![UML Class Diagram](uml.drawio.png)
 ## Why this is Strategy, not State or Template Method
 
 **It is not State.** In State an object changes its behavior when its own state changes, and the states often switch each other. For example, an order goes from "new" to "paid" to "shipped". In my program this does not happen. My pricing strategies do not know about each other and never switch each other on. Somebody from outside, the client or the Selector, chooses the strategy for the situation. A rental has no life cycle that moves from one strategy to the next.
